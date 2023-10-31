@@ -7,8 +7,8 @@
     "test": "mocha",
     "build": "tsc",
     "watch-ts": "tsc -w",
-    "dev": "nodemon src/server.ts",
-    "start": "nodemon dist/server.js",
+    "dev": "nodemon src/index.ts",
+    "start": "nodemon dist/index.js",
     "dbpush": "cd src && npx prisma db push",
     "migrate": "cd src && npx prisma migrate dev"
   },
