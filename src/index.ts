@@ -2,6 +2,7 @@
 import "dotenv/config";
 import PrettyError from "pretty-error"
 import express, { Request, Response, NextFunction } from "express";
+import bodyParser from "body-parser";
 import ServerlessHttp from "serverless-http";
 import morgan from "morgan";
 import cors from "cors";
@@ -18,6 +19,7 @@ const PORT: any = process.env.PORT || 3000;
 const prisma = new PrismaClient()
 const pe = new PrettyError();
 const app: any = express();
+
 const log = log4js.getLogger("entrypoint");
 log.level = "info";
 
@@ -27,8 +29,8 @@ app.use(helmet());
 app.use(hpp());
 app.use(cors());
 app.use(compression());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // * Http Logger
 morgan.token("time", (req: Request) => {
