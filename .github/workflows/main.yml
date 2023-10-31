@@ -16,7 +16,7 @@ jobs:
 
       # build command should be set in your package.json scripts as: "build": "tsc"
       - name: Build
-        run: npx prisma generate && npm run build
+        run: npm run build
 
       - name: Move node_modules to dist
         run: mv node_modules dist/node_modules
