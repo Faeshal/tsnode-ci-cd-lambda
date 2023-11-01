@@ -70,4 +70,5 @@ app.listen(PORT, (err: any) => {
   log.info(`✅ Server is Running On Port: ${PORT}`);
 });
 
-export default ServerlessHttp(app);
+// export default ServerlessHttp(app);
+module.exports.handler = ServerlessHttp(app);
