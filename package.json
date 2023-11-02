@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha",
-    "build": "npx prisma generate --schema=src/prisma/schema.prisma && tsc",
+    "build": "tsc",
     "watch-ts": "tsc -w",
     "dev": "nodemon src/index.ts",
     "start": "nodemon dist/index.js",
@@ -16,8 +16,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@prisma/client": "^5.4.1",
-    "@quixo3/prisma-session-store": "^3.1.13",
+    "@prisma/client": "^5.5.2",
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
     "compression": "^1.7.4",
@@ -54,6 +53,6 @@
     "chai-http": "^4.3.0",
     "mocha": "^10.0.0",
     "nodemon": "^3.0.1",
-    "prisma": "^5.4.1"
+    "prisma": "^5.5.2"
   }
 }
