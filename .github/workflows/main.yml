@@ -28,7 +28,7 @@ jobs:
       - name: Remove File
         uses: JesseTG/rm@v1.0.3
         with:
-          path: /node_modules/@prisma/
+          path: ./node_modules/@prisma/engines
 
       - name: Move node_modules to dist
         run: mv node_modules dist/node_modules
