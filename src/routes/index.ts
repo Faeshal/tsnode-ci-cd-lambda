@@ -11,4 +11,11 @@ router.get("/", (req, res, next) => {
     .json({ success: true, message: "welcome to the Express API" });
 });
 
+
+router.get("/info", (req, res, next) => {
+  res
+    .status(200)
+    .json({ success: true, message: new Date(); });
+});
+
 export default router;
