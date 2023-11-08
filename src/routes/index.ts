@@ -48,4 +48,12 @@ router.get("/info", async (req, res, next) => {
   }
 });
 
+
+
+router.get("/ping", (req, res, next) => {
+  res
+    .status(200)
+    .json({ success: true, message: "pong" });
+});
+
 export default router;
