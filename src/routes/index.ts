@@ -42,7 +42,9 @@ router.get("/info", async (req, res, next) => {
       .json({ success: true, message: JSON.stringify(secret) });
   } catch (error) {
     log.error("error", error);
-    throw error;
+    res
+      .status(500)
+      .json({ success: true, message: "error" });
   }
 });
 
