@@ -3,6 +3,7 @@ import "dotenv/config";
 import PrettyError from "pretty-error"
 import express, { Request, Response, NextFunction } from "express";
 import db from "./models";
+import ServerlessHttp from "serverless-http"
 import morgan from "morgan";
 import cors from "cors";
 import compression from "compression";
@@ -106,4 +107,5 @@ app.listen(PORT, (err: any) => {
   log.info(`✅ Server is Running On Port: ${PORT}`);
 });
 
-export default app;
+// export default app;
+module.exports.handler = ServerlessHttp(app);
