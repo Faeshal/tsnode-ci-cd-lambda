@@ -1,3 +1,4 @@
+import log4js from "log4js";
 import express from "express"
 import v1Route from "../routes/v1"
 const router = express.Router()
@@ -5,8 +6,7 @@ import {
   SecretsManagerClient,
   GetSecretValueCommand,
 } from "@aws-sdk/client-secrets-manager";
-import log4js from "log4js";
-const log = log4js.getLogger("x:x");
+const log = log4js.getLogger("routes:index");
 log.level = "debug";
 
 
@@ -21,25 +21,25 @@ router.get("/", (req, res, next) => {
 
 router.get("/info", async (req, res, next) => {
   try {
-    const secret_name = "prod/dbserver";
+    const secretName = "prod/dbserver";
     const client = new SecretsManagerClient({
       region: "ap-southeast-1",
     });
-    let response;
+    log.warn("CLIENT NIH:🪀", client)
 
-    response = await client.send(
+    var response = await client.send(
       new GetSecretValueCommand({
-        SecretId: secret_name,
+        SecretId: secretName,
         VersionStage: "AWSCURRENT",
       })
     );
 
-    log.info("RESPONSE:", response);
+    log.info("RESPONSE: ⭐", response);
     const secret = response.SecretString;
 
     res
       .status(200)
-      .json({ success: true, message: JSON.stringify(secret) });
+      .json({ success: true, message: secret });
   } catch (error) {
     log.error("error", error);
     res
