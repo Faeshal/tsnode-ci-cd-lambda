@@ -1,8 +1,10 @@
-🥇 Typescript Service Layer Architecture REST API Boilerplate with **[Prisma](https://www.prisma.io/)** ORM
+🥇 Typescript Service Layer Architecture REST API Boilerplate with **[Sequelize](https://sequelize.org/)** ORM
 
 ![img](https://i.postimg.cc/tCV5fVJZ/node-rest-template.png)
 
 🌴 Looking for **JS** implementation ? **[nodejs-layered-architecture](https://github.com/Faeshal/nodejs-layered-architecture)**
+
+🌴 Looking for **Typescript-Prisma** implementation ? **[nodets-layered-architecture-prisma](https://github.com/Faeshal/nodets-layered-architecture-prisma)**
 
 ❓ As you already know Express.js is an **unopinionated** framework, this means that developer free to determine how to structure the project. in Contrast with **opinionated** framework like Laravel or SpringBoot where developers are forced to follow their existing standard rules. However, one of the drawbacks of unopinionated framework is to finding best practices. There are no definite rules on how the project should be structure, each developer has own style to determining it. So i created this template as a backend boilerplate project that i usually use. I call this structure Service Layer Architecture & i will continuously update it when needed.
 
@@ -22,4 +24,4 @@
 
 This three-layer setup serves as a reliable scaffolding for most Node.js applications, making your applications easier to code, maintain, debug and test.
 
-🗡 **October 2023 - [faeshal.com](https://faeshal.com)**
+🗡 **November 2023 - [faeshal.com](https://faeshal.com)**

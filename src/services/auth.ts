@@ -34,7 +34,7 @@ export const register = async (body: { username: string, email: string, password
         success: true,
         statusCode: 200,
         message: "ok",
-        data: fmtData,
+        data: fmtData
     };
 };
 

@@ -11,10 +11,4 @@ router.get("/", (req, res, next) => {
     .json({ success: true, message: "welcome to the Express API" });
 });
 
-router.get("/api/v1/info", (req, res, next) => {
-  res
-    .status(200)
-    .json({ success: true, message: "build with express typescript", timestamp: Date.now() });
-});
-
 export default router;

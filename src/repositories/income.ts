@@ -1,51 +1,46 @@
-import { PrismaClient } from '@prisma/client'
-const prisma = new PrismaClient()
+import db from "../models";
 import log4js from "log4js";
 const log = log4js.getLogger("repository:income");
 log.level = "info";
 
 export const create = async (body: any) => {
-  const data = await prisma.income.create({ data: body });
+  const data = await db.income.create(body)
   return data
 };
 
 export const findAll = async (limit: number, offset: number, filter: any) => {
-  const totalData = await prisma.income.count();
-  const data = await prisma.income.findMany({
-    skip: offset,
-    take: limit,
+  const data = await db.category.findAndCountAll({
     where: filter,
-    include: {
-      user: {
-        select: {
-          email: true,
-        },
+    attributes: { exclude: ["deletedAt"] },
+    limit,
+    offset,
+    include: [
+      {
+        model: db.user,
+        attributes: ["email"],
       },
-      categories: {
-        select: {
-          tag: true
-        }
-      }
-    },
+      {
+        model: db.category,
+        attributes: ["tag"],
+      },
+    ],
   });
-  let result = { totalData, data };
-  return result;
-};
-
-export const findOne = async (filter: any) => {
-  const data = await prisma.income.findUnique({ where: filter });
   return data;
 };
 
+export const findOne = async (filter: any) => {
+  const data = await db.income.findOne({ where: filter });
+  return data
+};
+
 export const update = async (id: number, body: any) => {
-  const data = await prisma.income.update({
+  const data = await db.income.update({ body }, {
     where: { id },
-    data: body,
   });
   return data;
 };
 
 export const destroy = async (id: number) => {
-  const data = await prisma.income.delete({ where: { id } });
+  const data = await db.income.delete({ where: { id } });
   return data;
 };

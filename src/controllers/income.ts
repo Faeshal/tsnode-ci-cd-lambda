@@ -25,7 +25,7 @@ export const getIncomes = asyncHandler(async (req, res, next) => {
 
   // * pagination
   const pagin = await paginate({
-    length: data.totalData,
+    length: data.count,
     limit: req.query.limit,
     page: req.query.page,
     req,
@@ -33,11 +33,11 @@ export const getIncomes = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    totalData: data.totalData,
+    totalData: data.data.count,
     totalPage: pagin?.totalPage,
     currentPage: pagin?.currentPage,
     nextPage: pagin?.nextPage,
-    data: data.data || [],
+    data: data.rows || [],
   });
 });
 
@@ -56,14 +56,7 @@ export const addIncomes = asyncHandler(async (req, res, next) => {
     );
   }
 
-  let fmtIncome = {
-    name, value, userId, categories: {
-      create: categories
-    },
-  }
-  log.info("fmtIncome", fmtIncome)
-
-  const data = await incomeService.addIncome(fmtIncome);
+  const data = await incomeService.addIncome({ name, value, userId, categories });
 
   res.status(201).json({ success: true, message: "created", data });
 });

@@ -26,7 +26,7 @@ export const getCategories = asyncHandler(async (req, res, next) => {
 
     // * pagination
     const pagin = await paginate({
-        length: data.totalData,
+        length: data.count,
         limit: req.query.limit,
         page: req.query.page,
         req,
@@ -34,11 +34,11 @@ export const getCategories = asyncHandler(async (req, res, next) => {
 
     res.status(200).json({
         success: true,
-        totalData: data.totalData,
+        totalData: data.count,
         totalPage: pagin?.totalPage,
         currentPage: pagin?.currentPage,
         nextPage: pagin?.nextPage,
-        data: data.data || [],
+        data: data.rows || [],
     });
 });
 
@@ -56,8 +56,6 @@ export const addCategory = asyncHandler(async (req, res, next) => {
         );
 
     }
-
     await categoryService.addCategory(req.body);
-
     res.status(201).json({ success: true, message: "category create" });
 });

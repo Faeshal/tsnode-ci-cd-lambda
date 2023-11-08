@@ -1,21 +1,30 @@
-import { PrismaClient } from '@prisma/client'
-const prisma = new PrismaClient()
+import db from "../models";
 import log4js from "log4js";
 const log = log4js.getLogger("repository:category");
 log.level = "info";
 
 export const create = async (body: any) => {
-    const data = await prisma.category.create({ data: body });
+    const data = await db.category.create(body)
     return data;
 };
 
 export const findAll = async (limit: number, offset: number, filter: any) => {
-    const totalData = await prisma.category.count();
-    const data = await prisma.category.findMany({
-        skip: offset,
-        take: limit,
-        where: filter
+    const data = await db.category.findAndCountAll({
+        where: filter,
+        attributes: { exclude: ["deletedAt"] },
+        limit,
+        offset
     });
-    const result = { totalData, data };
-    return result;
+    return data;
+};
+
+
+export const bulkCreate = async (bodyArr: []) => {
+    const data = await db.category.bulkCreate(bodyArr)
+    return data;
+};
+
+export const findOne = async (filter: any) => {
+    const data = await db.category.findOne({ where: filter });
+    return data
 };

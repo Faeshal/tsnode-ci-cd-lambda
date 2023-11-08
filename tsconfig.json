@@ -3,6 +3,7 @@
     /* Basic Options */
     "target": "es6",
     "module": "commonjs",
+    "allowJs": true,
     "outDir": "./dist",
     /* Strict Type-Checking Options */
     "strict": true,

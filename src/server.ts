@@ -2,11 +2,9 @@
 import "dotenv/config";
 import PrettyError from "pretty-error"
 import express, { Request, Response, NextFunction } from "express";
-import bodyParser from "body-parser";
-import ServerlessHttp from "serverless-http";
+import db from "./models";
 import morgan from "morgan";
 import cors from "cors";
-import { PrismaClient } from '@prisma/client';
 import compression from "compression";
 import hpp from "hpp";
 import helmet from "helmet";
@@ -16,10 +14,8 @@ import dayjs from "dayjs";
 import { errorHandler } from "./middleware/errorHandler";
 import route from "./routes/index"
 const PORT: any = process.env.PORT || 3000;
-const prisma = new PrismaClient()
 const pe = new PrettyError();
 const app: any = express();
-
 const log = log4js.getLogger("entrypoint");
 log.level = "info";
 
@@ -29,8 +25,8 @@ app.use(helmet());
 app.use(hpp());
 app.use(cors());
 app.use(compression());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // * Http Logger
 morgan.token("time", (req: Request) => {
@@ -52,14 +48,54 @@ app.use(route);
 // * Custom Error Handler
 app.use(errorHandler);
 
-// * DB
-// const dbConn = async () => {
-//   await prisma.$connect().catch(err => {
-//     log.error("DB ERROR", err)
-//     process.exit(1);
-//   })
-// }
-// dbConn()
+// * Rolliing log (optional)
+let layoutConfig = {
+  type: "pattern",
+  pattern: "%x{id}: [%x{info}] %p %c - %[%m%]",
+  tokens: {
+    id: () => {
+      return Date.now();
+    },
+    info: (req: Request) => {
+      const info = dayjs().format("D/M/YYYY h:mm:ss A");
+      return info;
+    },
+  },
+};
+log4js.configure({
+  appenders: {
+    express: {
+      type: "dateFile",
+      filename: "./logs/express.log",
+      numBackups: 7,
+      layout: layoutConfig,
+      maxLogSize: 7000000, // byte == 7mb
+    },
+    console: {
+      type: "console",
+      layout: layoutConfig,
+    },
+  },
+  categories: {
+    default: { appenders: ["express", "console"], level: "debug" },
+  },
+});
+
+
+// * db sync
+(async () => {
+  try {
+    await db.sequelize.sync();
+    // await db.sequelize.authenticate()
+    // await db.sequelize.sync({ alter: true });
+    log.info("Maria Connected ✅");
+  } catch (error) {
+    log.error("Maria Connection Failure 🔥", error);
+    process.exit(1);
+  }
+})();
+
+
 
 // * Server Listen
 app.listen(PORT, (err: any) => {
@@ -70,5 +106,4 @@ app.listen(PORT, (err: any) => {
   log.info(`✅ Server is Running On Port: ${PORT}`);
 });
 
-// export default ServerlessHttp(app);
-module.exports.handler = ServerlessHttp(app);
+export default app;
