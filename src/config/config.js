@@ -1,4 +1,7 @@
 require("dotenv").config();
+import log4js from "log4js";
+const log = log4js.getLogger("config:config");
+log.level = "debug";
 
 module.exports = {
   development: {
