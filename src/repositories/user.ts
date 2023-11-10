@@ -23,6 +23,7 @@ export const findAll = async (limit: number, offset: number, filter: any) => {
 
 export const findOne = async (filter: any) => {
     const db = await dbCon()
+    console.log("DB findone return:⭕", db)
     const data = await db.user.findOne({
         where: filter
     })
