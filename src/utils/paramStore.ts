@@ -34,7 +34,7 @@ const awsParamStrore = async (pathName: string) => {
         }
     } catch (err: any) {
         log.error(err);
-        return;
+        return null
     }
 }
 

@@ -30,8 +30,8 @@ router.get("/info", async (req, res, next) => {
 });
 
 router.get("/ping", async (req, res, next) => {
-  const data = await awsParam("/rest-server/dev/dbpassword")
-  log.warn("DATA", data)
+  const data = await awsParam("/rest-server/dev/rds")
+  log.warn("AWS PARAM STORE:⭐", data)
   res
     .status(200)
     .json({ success: true, message: data });
