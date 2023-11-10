@@ -2,10 +2,7 @@ import log4js from "log4js";
 import express from "express"
 import v1Route from "../routes/v1"
 const router = express.Router()
-import {
-  SecretsManagerClient,
-  GetSecretValueCommand,
-} from "@aws-sdk/client-secrets-manager";
+import awsParam from "../utils/paramStore";
 const log = log4js.getLogger("routes:index");
 log.level = "debug";
 
@@ -21,25 +18,9 @@ router.get("/", (req, res, next) => {
 
 router.get("/info", async (req, res, next) => {
   try {
-    const secretName = "prod/dbserver";
-    const client = new SecretsManagerClient({
-      region: "ap-southeast-1",
-    });
-    log.warn("CLIENT NIH:🪀", client)
-
-    var response = await client.send(
-      new GetSecretValueCommand({
-        SecretId: secretName,
-        VersionStage: "AWSCURRENT",
-      })
-    );
-
-    log.info("RESPONSE: ⭐", response);
-    const secret = response.SecretString;
-
     res
       .status(200)
-      .json({ success: true, message: secret });
+      .json({ success: true, message: "info" });
   } catch (error) {
     log.error("error", error);
     res
@@ -48,12 +29,12 @@ router.get("/info", async (req, res, next) => {
   }
 });
 
-
-
-router.get("/ping", (req, res, next) => {
+router.get("/ping", async (req, res, next) => {
+  const data = await awsParam("/rest-server/dev/dbpassword")
+  log.warn("DATA", data)
   res
     .status(200)
-    .json({ success: true, message: "pong" });
+    .json({ success: true, message: data });
 });
 
 export default router;

@@ -2,7 +2,9 @@
 import "dotenv/config";
 import PrettyError from "pretty-error"
 import express, { Request, Response, NextFunction } from "express";
-import db from "./models";
+// import db from "./models";
+// import { connect } from "./models/index"
+import { dbCon } from "./models";
 import ServerlessHttp from "serverless-http"
 import morgan from "morgan";
 import cors from "cors";
@@ -49,45 +51,12 @@ app.use(route);
 // * Custom Error Handler
 app.use(errorHandler);
 
-// * Rolliing log (optional)
-// let layoutConfig = {
-//   type: "pattern",
-//   pattern: "%x{id}: [%x{info}] %p %c - %[%m%]",
-//   tokens: {
-//     id: () => {
-//       return Date.now();
-//     },
-//     info: (req: Request) => {
-//       const info = dayjs().format("D/M/YYYY h:mm:ss A");
-//       return info;
-//     },
-//   },
-// };
-// log4js.configure({
-//   appenders: {
-//     express: {
-//       type: "dateFile",
-//       filename: "./logs/express.log",
-//       numBackups: 7,
-//       layout: layoutConfig,
-//       maxLogSize: 7000000, // byte == 7mb
-//     },
-//     console: {
-//       type: "console",
-//       layout: layoutConfig,
-//     },
-//   },
-//   categories: {
-//     default: { appenders: ["express", "console"], level: "debug" },
-//   },
-// });
-
-
 // * db sync
 (async () => {
   try {
-    await db.sequelize.sync();
-    // await db.sequelize.authenticate()
+    const db = await dbCon()
+    // await db.sequelize.sync();
+    await db.sequelize.authenticate()
     // await db.sequelize.sync({ alter: true });
     log.info("Maria Connected ✅");
   } catch (error) {
@@ -95,7 +64,6 @@ app.use(errorHandler);
     return
   }
 })();
-
 
 
 // * Server Listen
