@@ -9,6 +9,9 @@ const awsParamStrore = async (pathName: string) => {
     try {
         log.info("aws param utils:", pathName)
 
+
+
+
         // * check cache
         const cache = await keyv.get(pathName);
         log.debug("CACHE", cache)
@@ -28,8 +31,25 @@ const awsParamStrore = async (pathName: string) => {
             // set cache
             await keyv.set(pathName, value);
 
+
+
+            // set env
+            if (value == undefined) return
+            const rds = value.split(",");
+            process.env.DB_HOST = rds[0]
+            process.env.DB_PASSWORD = rds[1]
+            process.env.DB_NAME = rds[2]
+            process.env.DB_HOST = rds[3]
+
             return value
         } else {
+            // set env
+            const rds = cache.split(",");
+            process.env.DB_HOST = rds[0]
+            process.env.DB_PASSWORD = rds[1]
+            process.env.DB_NAME = rds[2]
+            process.env.DB_HOST = rds[3]
+
             return cache
         }
     } catch (err: any) {

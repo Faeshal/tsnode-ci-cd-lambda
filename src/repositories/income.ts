@@ -1,17 +1,14 @@
-// import db from "../models";
-import { dbCon } from "../models";
+import db from "../models";
 import log4js from "log4js";
 const log = log4js.getLogger("repository:income");
 log.level = "info";
 
 export const create = async (body: any) => {
-  const db = await dbCon()
   const data = await db.income.create(body)
   return data
 };
 
 export const findAll = async (limit: number, offset: number, filter: any) => {
-  const db = await dbCon()
   const data = await db.category.findAndCountAll({
     where: filter,
     attributes: { exclude: ["deletedAt"] },
@@ -32,13 +29,11 @@ export const findAll = async (limit: number, offset: number, filter: any) => {
 };
 
 export const findOne = async (filter: any) => {
-  const db = await dbCon()
   const data = await db.income.findOne({ where: filter });
   return data
 };
 
 export const update = async (id: number, body: any) => {
-  const db = await dbCon()
   const data = await db.income.update({ body }, {
     where: { id },
   });
@@ -46,7 +41,6 @@ export const update = async (id: number, body: any) => {
 };
 
 export const destroy = async (id: number) => {
-  const db = await dbCon()
   const data = await db.income.delete({ where: { id } });
   return data;
 };

@@ -1,3 +1,4 @@
+import "dotenv/config";
 import log4js from "log4js";
 import express from "express"
 import v1Route from "../routes/v1"
@@ -30,7 +31,8 @@ router.get("/info", async (req, res, next) => {
 });
 
 router.get("/ping", async (req, res, next) => {
-  const data = await awsParam("/rest-server/dev/rds")
+  const data = process.env.RDS || "empty"
+  // const data = await awsParam("/rest-server/dev/rds")
   log.warn("AWS PARAM STORE:⭐", data)
   res
     .status(200)
