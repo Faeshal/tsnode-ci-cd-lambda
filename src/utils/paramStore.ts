@@ -23,6 +23,7 @@ const awsParamStrore = async (pathName: string) => {
             const command = new GetParameterCommand(input)
             const data = await client.send(command);
             const value = data.Parameter?.Value || ""
+            log.warn("value from aws:", value)
 
             // set cache
             await keyv.set(pathName, value);
