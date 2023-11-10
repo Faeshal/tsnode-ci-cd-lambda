@@ -12,6 +12,7 @@ export const register = async (body: { username: string, email: string, password
 
     // * call repo (check double email)
     const emailExist = await userRepo.findOne({ email });
+    log.info('emailExist:', emailExist)
     if (emailExist) {
         return { success: false, statusCode: 400, message: "email already exist" };
     }
