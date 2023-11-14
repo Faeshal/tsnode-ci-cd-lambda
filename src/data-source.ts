@@ -32,6 +32,12 @@ export const AppDataSource = async () => {
     const dbName = rds[2]
     const dbHost = rds[3]
 
+    log.warn("dbUsername", dbUsername)
+    log.warn("dbPassword", dbPassword)
+    log.warn("dbName", dbName)
+    log.warn("dbHost", dbHost)
+
+
     return new DataSource({
         type: "mysql",
         host: dbHost,
