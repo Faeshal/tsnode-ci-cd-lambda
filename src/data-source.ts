@@ -24,30 +24,25 @@ log.level = "info";
 // })
 
 
-export const dbConn = async () => {
+export const AppDataSource = async () => {
     const data = await awsParamStrore("/rest-server/dev/rds")
-    console.log("data", data)
     const rds = data.split(",");
-
+    const dbUsername = rds[0]
+    const dbPassword = rds[1]
+    const dbName = rds[2]
     const dbHost = rds[3]
-    log.warn("dbhost", dbHost)
 
-
-    const AppDataSource = new DataSource({
+    return new DataSource({
         type: "mysql",
         host: dbHost,
         port: 3306,
-        username: "admin",
-        password: "Password1!",
-        database: "income",
+        username: dbUsername,
+        password: dbPassword,
+        database: dbName,
         synchronize: true,
         logging: false,
         entities: [User, Income, Category],
         migrations: [],
         subscribers: [],
     })
-
-    const conn = await AppDataSource.initialize()
-    log.warn("CON", conn)
-    return AppDataSource
 }

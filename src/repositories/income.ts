@@ -1,4 +1,4 @@
-// import { AppDataSource } from "../data-source";
+import { AppDataSource } from "../data-source";
 import { Income } from "../entity/Income";
 import log4js from "log4js";
 const log = log4js.getLogger("repository:income");
@@ -50,7 +50,8 @@ export const destroy = async (id: number) => {
 
 
 export const insertToPivotTable = async (tableName: string, body: any) => {
-    // const data = await AppDataSource.createQueryBuilder(tableName, tableName).insert().values(body).execute();
-    return "data";
+    const db = await AppDataSource()
+    const data = await db.createQueryBuilder(tableName, tableName).insert().values(body).execute();
+    return data
 };
 

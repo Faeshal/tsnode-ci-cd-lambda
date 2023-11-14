@@ -3,7 +3,7 @@ import "dotenv/config";
 import PrettyError from "pretty-error"
 import express, { Request, Response, NextFunction } from "express";
 import ServerlessHttp from "serverless-http"
-import { dbConn } from "./data-source";
+import { AppDataSource } from "./data-source";
 import morgan from "morgan";
 import cors from "cors";
 import compression from "compression";
@@ -52,9 +52,10 @@ app.use(errorHandler);
 // * db sync
 (async () => {
   try {
-    await dbConn()
+    const db = await AppDataSource()
+    await db.initialize()
   } catch (error) {
-    log.error("Maria Connection Failure 🔥", error);
+    log.error("MariaDB Failure 🔥", error);
     return
   }
 })();

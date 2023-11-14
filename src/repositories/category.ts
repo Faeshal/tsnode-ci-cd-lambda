@@ -1,5 +1,4 @@
-// import { AppDataSource } from "../data-source";
-import { dbConn } from "../data-source";
+import { AppDataSource } from "../data-source";
 import { Category } from "../entity/Category";
 import log4js from "log4js";
 const log = log4js.getLogger("repository:category");
@@ -23,13 +22,14 @@ export const findAll = async (limit: number, offset: number, filter: any) => {
 
 export const bulkCreate = async (bodyArr: any) => {
     log.warn("bodyarr", bodyArr)
-    // const data = await AppDataSource
-    //     .createQueryBuilder()
-    //     .insert()
-    //     .into(Category)
-    //     .values([bodyArr])
-    //     .execute()
-    return "data";
+    const db = await AppDataSource()
+    const data = await db
+        .createQueryBuilder()
+        .insert()
+        .into(Category)
+        .values([bodyArr])
+        .execute()
+    return data;
 };
 
 export const findOne = async (filter: any) => {
@@ -43,9 +43,7 @@ export const destroy = async (filter: any) => {
     //     .createQueryBuilder(Category, "category")
     //     .softDelete()
     //     .where("id = :id", filter).execute();
-    // const data = await AppDataSource.manager.createQueryBuilder(Category, "category").softDelete().where("id = :id", filter).execute();
-
-    dbConn
-
-    return "data"
+    const db = await AppDataSource()
+    const data = await db.manager.createQueryBuilder(Category, "category").softDelete().where("id = :id", filter).execute();
+    return data
 };
