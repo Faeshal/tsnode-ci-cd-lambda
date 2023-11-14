@@ -23,7 +23,7 @@ export const getUsers = asyncHandler(async (req, res, next) => {
 
     // * pagination
     const pagin = await paginate({
-        length: data.count,
+        length: data[1],
         limit: req.query.limit,
         page: req.query.page,
         req,
@@ -31,10 +31,10 @@ export const getUsers = asyncHandler(async (req, res, next) => {
 
     res.status(200).json({
         success: true,
-        totalData: data.count,
+        totalData: data[1],
         totalPage: pagin?.totalPage,
         currentPage: pagin?.currentPage,
         nextPage: pagin?.nextPage,
-        data: data.rows || [],
+        data: data[0] || [],
     });
 });

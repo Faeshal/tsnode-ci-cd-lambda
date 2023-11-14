@@ -33,8 +33,9 @@
     "mysql2": "^3.6.3",
     "paseto": "^3.1.4",
     "pretty-error": "^4.0.0",
-    "sequelize": "^6.34.0",
+    "reflect-metadata": "^0.1.13",
     "serverless-http": "^3.2.0",
+    "typeorm": "^0.3.17",
     "underscore": "^1.13.4"
   },
   "devDependencies": {
@@ -52,7 +53,6 @@
     "chai": "^4.3.6",
     "chai-http": "^4.3.0",
     "mocha": "^10.0.0",
-    "nodemon": "^3.0.1",
-    "sequelize-cli": "^6.6.2"
+    "nodemon": "^3.0.1"
   }
 }

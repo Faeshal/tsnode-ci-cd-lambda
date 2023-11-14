@@ -26,7 +26,7 @@ export const getCategories = asyncHandler(async (req, res, next) => {
 
     // * pagination
     const pagin = await paginate({
-        length: data.count,
+        length: data[1],
         limit: req.query.limit,
         page: req.query.page,
         req,
@@ -34,11 +34,11 @@ export const getCategories = asyncHandler(async (req, res, next) => {
 
     res.status(200).json({
         success: true,
-        totalData: data.count,
+        totalData: data[1],
         totalPage: pagin?.totalPage,
         currentPage: pagin?.currentPage,
         nextPage: pagin?.nextPage,
-        data: data.rows || [],
+        data: data[0] || [],
     });
 });
 
@@ -58,4 +58,24 @@ export const addCategory = asyncHandler(async (req, res, next) => {
     }
     await categoryService.addCategory(req.body);
     res.status(201).json({ success: true, message: "category create" });
+});
+
+
+// * @route delete /api/v1/categories
+// @desc    delete categories
+// @access  public
+export const deleteCategory = asyncHandler(async (req, res, next) => {
+    log.info("body:", req.body);
+    let { id } = req.params
+
+    // *Express Validator
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return next(
+            new ErrorResponse(errors.array({ onlyFirstError: true })[0].msg, 400)
+        );
+
+    }
+    const data = await categoryService.deleteCategory(id);
+    res.status(201).json({ success: true, message: "category delete", data });
 });

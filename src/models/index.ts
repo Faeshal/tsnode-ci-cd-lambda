@@ -4,16 +4,8 @@ const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
 const basename = path.basename(__filename);
-const env = process.env.NODE_ENV || 'development';
-const config = require(__dirname + '/../config/config.js')[env];
 const db: any = {};
-
 let sequelize: any;
-// if (config.use_env_variable) {
-//   sequelize = new Sequelize(process.env[config.use_env_variable], config);
-// } else {
-//   sequelize = new Sequelize(config.database, config.username, config.password, config);
-// }
 
 // * init connection
 const DB_NAME = process.env.DB_NAME
@@ -21,12 +13,14 @@ const DB_HOST = process.env.DB_HOST
 const DB_USERNAME = process.env.DB_USERNAME
 const DB_PASSWORD = process.env.DB_PASSWORD
 
+import Category from "./category"
+
 sequelize = new Sequelize(DB_NAME, DB_USERNAME, DB_PASSWORD, {
   host: DB_HOST,
   dialect: "mysql",
   logging: false
+  models: [Category]
 });
-
 
 
 fs

@@ -1,31 +1,51 @@
-import db from "../models";
-// import { dbCon } from "../models";
+// import { AppDataSource } from "../data-source";
+import { dbConn } from "../data-source";
+import { Category } from "../entity/Category";
 import log4js from "log4js";
 const log = log4js.getLogger("repository:category");
-log.level = "info";
+log.level = "debug";
 
 export const create = async (body: any) => {
-    const data = await db.category.create(body)
+    const data = await Category.save(body)
     return data;
 };
 
 export const findAll = async (limit: number, offset: number, filter: any) => {
-    const data = await db.category.findAndCountAll({
+    const data = await Category.findAndCount({
         where: filter,
-        attributes: { exclude: ["deletedAt"] },
-        limit,
-        offset
+        skip: offset,
+        take: limit
     });
+    log.warn('data', data)
     return data;
 };
 
 
-export const bulkCreate = async (bodyArr: []) => {
-    const data = await db.category.bulkCreate(bodyArr)
-    return data;
+export const bulkCreate = async (bodyArr: any) => {
+    log.warn("bodyarr", bodyArr)
+    // const data = await AppDataSource
+    //     .createQueryBuilder()
+    //     .insert()
+    //     .into(Category)
+    //     .values([bodyArr])
+    //     .execute()
+    return "data";
 };
 
 export const findOne = async (filter: any) => {
-    const data = await db.category.findOne({ where: filter });
+    const data = await Category.findOne({ where: filter });
     return data
+};
+
+export const destroy = async (filter: any) => {
+    // const data = await Category.softRemove(filter) // hard delete
+    // const data = await AppDataSource
+    //     .createQueryBuilder(Category, "category")
+    //     .softDelete()
+    //     .where("id = :id", filter).execute();
+    // const data = await AppDataSource.manager.createQueryBuilder(Category, "category").softDelete().where("id = :id", filter).execute();
+
+    dbConn
+
+    return "data"
 };

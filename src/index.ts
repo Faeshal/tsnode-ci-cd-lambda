@@ -2,10 +2,8 @@
 import "dotenv/config";
 import PrettyError from "pretty-error"
 import express, { Request, Response, NextFunction } from "express";
-import db from "./models";
-// import { connect } from "./models/index"
-// import { dbCon } from "./models";
 import ServerlessHttp from "serverless-http"
+import { dbConn } from "./data-source";
 import morgan from "morgan";
 import cors from "cors";
 import compression from "compression";
@@ -15,7 +13,6 @@ import log4js from "log4js";
 import paginate from "express-paginate";
 import dayjs from "dayjs";
 import { errorHandler } from "./middleware/errorHandler";
-import awsParamStrore from "./utils/paramStore";
 import route from "./routes/index"
 const PORT: any = process.env.PORT || 3000;
 const pe = new PrettyError();
@@ -55,14 +52,7 @@ app.use(errorHandler);
 // * db sync
 (async () => {
   try {
-    await awsParamStrore("/rest-server/dev/rds")
-
-    // await db.sequelize.sync();
-    await db.sequelize.authenticate()
-    // await db.sequelize.sync({ alter: true });
-    log.info("Maria Connected ✅");
-
-    log.warn("PARAMNYA APA:⭐", process.env.DB_HOST)
+    await dbConn()
   } catch (error) {
     log.error("Maria Connection Failure 🔥", error);
     return

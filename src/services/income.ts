@@ -8,20 +8,27 @@ export const addIncome = async (body: any) => {
   log.info("body:", body);
   const { name, value, userId, categories } = body
 
+  // income
+  const data = await incomeRepo.create({ name, value, userId });
+  const incomeId = data.id
+
   // category 
   for (let category of categories) {
     const { tag } = category
     const isExist = await categoryRepo.findOne({ tag })
+    var categoryId
     if (!isExist) {
-      await categoryRepo.create({ tag })
+      const cat = await categoryRepo.create({ tag })
+      categoryId = cat.id
       log.info("new category created")
     } else {
-      log.info("category already exist")
+      categoryId = isExist.id
+      log.info("category already exist", categoryId)
     }
-  }
 
-  // income
-  const data = await incomeRepo.create({ name, value, userId });
+    const insert = await incomeRepo.insertToPivotTable("income_categories_category", { incomeId, categoryId })
+    log.warn("inser to pivot:", insert)
+  }
 
   return data;
 };

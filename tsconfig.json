@@ -3,7 +3,6 @@
     /* Basic Options */
     "target": "es6",
     "module": "commonjs",
-    "allowJs": true,
     "outDir": "./dist",
     /* Strict Type-Checking Options */
     "strict": true,
@@ -13,6 +12,9 @@
     "sourceRoot": "./src",
     "inlineSourceMap": true,
     "skipLibCheck": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "strictPropertyInitialization": false,
     "typeRoots": ["./src/@types", "./node_modules/@types"]
   }
 }
