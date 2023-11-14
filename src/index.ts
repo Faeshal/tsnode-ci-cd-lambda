@@ -53,8 +53,8 @@ app.use(errorHandler);
 (async () => {
   try {
     const db = await AppDataSource()
-    const x = await db.initialize()
-    log.info("MariaDB Connected ✅", x);
+    await db.initialize()
+    log.info("MariaDB Connected ✅");
   } catch (error) {
     log.error("MariaDB Failure 🔥", error);
     return
