@@ -41,7 +41,7 @@ log.level = "info";
 
 export const AppDataSource = async () => {
     const data = await awsParamStrore("/rest-server/dev/rds")
-    log.warn("DATA", data)
+    log.warn("DATA ⭐⭐⭐⭕⭐⭐⭐", data)
     const rds = data.split(",");
     const dbUsername = rds[0]
     const dbPassword = rds[1]
