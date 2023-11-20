@@ -38,22 +38,6 @@ log.level = "info";
 //     subscribers: [],
 // })
 
-
-// return new DataSource({
-//     type: "mysql",
-//     host: "office-db.cbmyrn7cw8vh.ap-southeast-1.rds.amazonaws.com",
-//     port: 3306,
-//     username: "admin",
-//     password: "Password1!",
-//     database: "income",
-//     synchronize: true,
-//     logging: true,
-//     entities: [User, Income, Category],
-//     migrations: [],
-//     subscribers: [],
-// })
-
-
 export const AppDataSource = async () => {
     const data = await awsParamStrore("/rest-server/dev/rds")
     log.warn("DATA ⭐⭐⭐⭕⭐⭐⭐", data)
@@ -62,11 +46,6 @@ export const AppDataSource = async () => {
     const dbPassword = rds[1]
     const dbName = rds[2]
     const dbHost = rds[3]
-
-    log.warn("dbUsername ⭐:", dbUsername)
-    log.warn("dbPassword ⭐:", dbPassword)
-    log.warn("dbName ⭐:", dbName)
-    log.warn("dbHost ⭐:", dbHost)
 
     return new DataSource({
         type: "mysql",
@@ -81,6 +60,4 @@ export const AppDataSource = async () => {
         migrations: [],
         subscribers: [],
     })
-
-
 }

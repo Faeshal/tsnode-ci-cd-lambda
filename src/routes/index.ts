@@ -13,9 +13,8 @@ router.get("/", (req, res, next) => {
 });
 
 
+// for debuging
 router.get("/api/v1/info", async (req, res, next) => {
-  const data = await awsParamStrore("/rest-server/dev/rds")
-  console.warn("DATA ⭐⭐⭐⭕⭐⭐⭐", data)
   res
     .status(200)
     .json({ success: true, data: { ip: req.ip, path: req.path, timestamp: new Date() } });
