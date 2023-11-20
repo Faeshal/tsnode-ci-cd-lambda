@@ -48,17 +48,31 @@ export const AppDataSource = async () => {
     const dbName = rds[2]
     const dbHost = rds[3]
 
+    // return new DataSource({
+    //     type: "mysql",
+    //     host: dbHost,
+    //     port: 3306,
+    //     username: dbUsername,
+    //     password: dbPassword,
+    //     database: dbName,
+    //     synchronize: true,
+    //     logging: true,
+    //     entities: [User, Income, Category],
+    //     migrations: [],
+    //     subscribers: [],
+    // })
     return new DataSource({
         type: "mysql",
-        host: dbHost,
+        host: "office-db.cbmyrn7cw8vh.ap-southeast-1.rds.amazonaws.com",
         port: 3306,
-        username: dbUsername,
-        password: dbPassword,
-        database: dbName,
+        username: "admin",
+        password: "Password1!",
+        database: "income",
         synchronize: true,
         logging: true,
         entities: [User, Income, Category],
         migrations: [],
         subscribers: [],
     })
+
 }
