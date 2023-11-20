@@ -12,7 +12,7 @@ router.get("/", (req, res, next) => {
 });
 
 
-router.get("/info", (req, res, next) => {
+router.get("/api/v1/info", (req, res, next) => {
   res
     .status(200)
     .json({ success: true, data: { ip: req.ip, path: req.path, timestamp: new Date() } });
