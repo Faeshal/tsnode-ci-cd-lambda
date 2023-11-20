@@ -24,35 +24,36 @@ log.level = "info";
 // })
 
 
-export const AppDataSource = async () => {
-    // const data = await awsParamStrore("/rest-server/dev/rds")
-    // const rds = data.split(",");
-    // const dbUsername = rds[0]
-    // const dbPassword = rds[1]
-    // const dbName = rds[2]
-    // const dbHost = rds[3]
+// return new DataSource({
+//     type: "mysql",
+//     host: "office-db.cbmyrn7cw8vh.ap-southeast-1.rds.amazonaws.com",
+//     port: 3306,
+//     username: "admin",
+//     password: "Password1!",
+//     database: "income",
+//     synchronize: true,
+//     logging: true,
+//     entities: [User, Income, Category],
+//     migrations: [],
+//     subscribers: [],
+// })
 
-    // return new DataSource({
-    //     type: "mysql",
-    //     host: dbHost,
-    //     port: 3306,
-    //     username: dbUsername,
-    //     password: dbPassword,
-    //     database: dbName,
-    //     synchronize: true,
-    //     logging: true,
-    //     entities: [User, Income, Category],
-    //     migrations: [],
-    //     subscribers: [],
-    // })
+
+export const AppDataSource = async () => {
+    const data = await awsParamStrore("/rest-server/dev/rds")
+    const rds = data.split(",");
+    const dbUsername = rds[0]
+    const dbPassword = rds[1]
+    const dbName = rds[2]
+    const dbHost = rds[3]
 
     return new DataSource({
         type: "mysql",
-        host: "office-db.cbmyrn7cw8vh.ap-southeast-1.rds.amazonaws.com",
+        host: dbHost,
         port: 3306,
-        username: "admin",
-        password: "Password1!",
-        database: "income",
+        username: dbUsername,
+        password: dbPassword,
+        database: dbName,
         synchronize: true,
         logging: true,
         entities: [User, Income, Category],
