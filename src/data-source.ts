@@ -46,7 +46,6 @@ export const AppDataSource = async () => {
     //     subscribers: [],
     // })
 
-
     return new DataSource({
         type: "mysql",
         host: "office-db.cbmyrn7cw8vh.ap-southeast-1.rds.amazonaws.com",
