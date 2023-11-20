@@ -49,7 +49,7 @@ export const AppDataSource = async () => {
 
     return new DataSource({
         type: "mysql",
-        host: "office-db-server.cbmyrn7cw8vh.ap-southeast-1.rds.amazonaws.com",
+        host: "office-db.cbmyrn7cw8vh.ap-southeast-1.rds.amazonaws.com",
         port: 3306,
         username: "admin",
         password: "Password1!",
